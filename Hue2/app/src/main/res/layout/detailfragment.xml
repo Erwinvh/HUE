@@ -10,39 +10,55 @@
         android:id="@+id/LampNameDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="176dp"
-        tools:layout_editor_absoluteY="16dp" />
+        android:layout_marginTop="16dp"
+        android:text="@string/nullText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Switch
         android:id="@+id/switchDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Switch"
-        tools:layout_editor_absoluteX="301dp"
-        tools:layout_editor_absoluteY="105dp" />
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:text="ON/OFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/LampInfo"
+        app:layout_constraintTop_toBottomOf="@+id/LampSettings" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/LampInfo"
         android:layout_width="287dp"
         android:layout_height="138dp"
-        tools:layout_editor_absoluteX="2dp"
-        tools:layout_editor_absoluteY="49dp" />
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LampNameDetail" />
 
     <ImageView
         android:id="@+id/ColourWheel"
         android:layout_width="354dp"
         android:layout_height="380dp"
-        app:srcCompat="@drawable/ic_launcher_foreground"
-        tools:layout_editor_absoluteX="29dp"
-        tools:layout_editor_absoluteY="238dp" />
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LampInfo"
+        app:srcCompat="@drawable/ic_launcher_foreground" />
 
     <Button
         android:id="@+id/LampSettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         android:text="settings lamp"
         android:textSize="10sp"
-        tools:layout_editor_absoluteX="301dp"
-        tools:layout_editor_absoluteY="25dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/LampInfo"
+        app:layout_constraintTop_toBottomOf="@+id/LampNameDetail" />
 </androidx.constraintlayout.widget.ConstraintLayout>
