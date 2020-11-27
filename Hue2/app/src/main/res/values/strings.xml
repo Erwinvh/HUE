@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Hue</string>
     <string name="nullText">TextView</string>
+    <string name="AppName">HUE</string>
 </resources>

@@ -12,10 +12,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
-import com.example.hue.Lamp;
 import com.example.hue.R;
 
-public class masterfragment extends Fragment {
+public class settingsfragment extends Fragment {
 
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
         View RootView = inflater.inflate(R.layout.detailfragment, container, false);
@@ -25,15 +24,14 @@ public class masterfragment extends Fragment {
             @Override
             public void onClick(View v) {
                 final Intent intent;
-                    Fragment LampDetailFragment = new settingsfragment();
-                    ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.Container, LampDetailFragment).commit();
+                Fragment LampDetailFragment = new settingsfragment();
+                ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.Container, LampDetailFragment).commit();
 
             }
         });
 
         return RootView;
     }
-
 
 
 }
