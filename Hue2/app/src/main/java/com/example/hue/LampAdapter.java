@@ -110,7 +110,16 @@ public class LampAdapter extends RecyclerView.Adapter<LampAdapter.LampViewHolder
             super(itemView);
             context = itemView.getContext();
             LampNameItemView = itemView.findViewById(R.id.LampName);
-            LampSwitchItemView = itemView.findViewById(R.id.LampSwitch);
+            LampSwitchItemView = (Switch) itemView.findViewById(R.id.LampSwitch);
+            LampSwitchItemView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    int mPosition = getLayoutPosition();
+                    Lamp element = mLampList.get(mPosition);
+                    element.toggleLamp(!LampSwitchItemView.isChecked());
+                    LampSwitchItemView.setChecked(!LampSwitchItemView.isChecked());
+                }
+            });
             LampImageItemView = itemView.findViewById(R.id.LampImage);
             this.mAdapter = adapter;
             itemView.setOnClickListener(this);

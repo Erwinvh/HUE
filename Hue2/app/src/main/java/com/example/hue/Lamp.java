@@ -50,4 +50,12 @@ public class Lamp implements Parcelable {
         //TODO:
         return false;
     }
+
+    public void setName(String newName) {
+        //TODO:
+    }
+
+    public void toggleLamp(boolean b) {
+        //TODO:
+    }
 }
