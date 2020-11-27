@@ -11,6 +11,8 @@ import com.example.hue.database.table.Light;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static com.example.hue.MainActivity.sLightDatabaseCallback;
+
 @Database(entities = {Light.class}, version = 1)
 public abstract class LightRoomDatabase extends RoomDatabase {
 
@@ -27,7 +29,7 @@ public abstract class LightRoomDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             LightRoomDatabase.class, "light_database")
-                            // TODO add callback to update the RecyclerView: .addCallback(sLightDatabaseCallback)
+                             .addCallback(sLightDatabaseCallback)
                             .build();
                 }
             }
