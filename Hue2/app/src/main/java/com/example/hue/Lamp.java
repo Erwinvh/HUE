@@ -8,16 +8,16 @@ public class Lamp implements Parcelable {
     //teswtcode
     private String helloworld;
 
-    public Lamp(Parcel in) {
+    public Lamp() {
 
-        helloworld = in.readString();
+
     }
 
 
     public static final Creator<Lamp> CREATOR = new Creator<Lamp>() {
         @Override
         public Lamp createFromParcel(Parcel in) {
-            return new Lamp(in);
+            return new Lamp();
         }
 
         @Override

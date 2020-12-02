@@ -29,6 +29,9 @@ public class LampAdapter extends RecyclerView.Adapter<LampAdapter.LampViewHolder
         mInflator = LayoutInflater.from(context);
         this.mLampList = projectList;
 
+        //TEST code, remove in final
+        this.mLampList.add(new Lamp());
+
     }
 
 

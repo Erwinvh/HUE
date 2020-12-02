@@ -20,16 +20,16 @@ public class masterfragment extends Fragment {
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
         View RootView = inflater.inflate(R.layout.detailfragment, container, false);
 
-        Button SettingsButton = (Button) RootView.findViewById(R.id.SettingsButton);
-        SettingsButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                final Intent intent;
-                    Fragment LampDetailFragment = new settingsfragment();
-                    ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.Container, LampDetailFragment).commit();
-
-            }
-        });
+//        Button SettingsButton = (Button) RootView.findViewById(R.id.SettingsButton);
+//        SettingsButton.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//                final Intent intent;
+//                    Fragment LampDetailFragment = new settingsfragment();
+//                    //((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.Container, LampDetailFragment).commit();
+//
+//            }
+//        });
 
         return RootView;
     }

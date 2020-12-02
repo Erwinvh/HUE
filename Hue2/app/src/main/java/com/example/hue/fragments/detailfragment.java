@@ -2,11 +2,13 @@ package com.example.hue.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -19,9 +21,15 @@ import com.example.hue.Lamp;
 import com.example.hue.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import top.defaults.colorpicker.ColorPickerPopup;
+
 public class detailfragment extends Fragment {
 
     private Lamp subjectLamp;
+
+    private int mDefaultColor = 0;
+    private Button mPickColorButton;
+    private View mColorPreview;
 
     @Nullable
     @Override
@@ -66,10 +74,34 @@ public class detailfragment extends Fragment {
         });
 
         //TODO: add colorwheel picker
-
-
-
-
+        Button mPickColorButton = (Button) RootView.findViewById(R.id.pick_color_button);;
+ mDefaultColor = 0;
+       // mSetColorButton = RootView.findViewById(R.id.set_color_button);
+        mColorPreview = RootView.findViewById(R.id.preview_selected_color);
+        mPickColorButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View v) {
+                        new ColorPickerPopup.Builder(getContext()).initialColor(Color.RED)
+                                .enableBrightness(true)
+                                .enableAlpha(true)
+                                .okTitle("Choose")
+                                .cancelTitle("Cancel")
+                                .showIndicator(true)
+                                .showValue(true)
+                                .build()
+                                .show(
+                                        v,
+                                        new ColorPickerPopup.ColorPickerObserver() {
+                                            @Override
+                                            public void
+                                            onColorPicked(int color) {
+                                                mDefaultColor = color;
+                                                mColorPreview.setBackgroundColor(mDefaultColor);
+                                            }
+                                        });
+                    }
+                });
 
 
         return RootView;
