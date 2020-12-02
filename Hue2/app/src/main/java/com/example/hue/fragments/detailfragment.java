@@ -52,8 +52,7 @@ public class detailfragment extends Fragment {
         LampSwitch.setChecked(subjectLamp.getLampState());
         LampSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                subjectLamp.toggleLamp(!LampSwitch.isChecked());
-//                LampSwitch.setChecked(!LampSwitch.isChecked());
+                subjectLamp.toggleLamp(!LampSwitch.isChecked());
                 if (!LampSwitch.isChecked()){
                     mColorPreview.setBackgroundColor(Color.BLACK);
                 }

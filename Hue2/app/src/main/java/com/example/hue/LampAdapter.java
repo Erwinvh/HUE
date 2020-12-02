@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -123,13 +124,12 @@ public class LampAdapter extends RecyclerView.Adapter<LampAdapter.LampViewHolder
             context = itemView.getContext();
             LampNameItemView = itemView.findViewById(R.id.LampName);
             LampSwitchItemView = (Switch) itemView.findViewById(R.id.LampSwitch);
-            LampSwitchItemView.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v){
+            LampSwitchItemView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     int mPosition = getLayoutPosition();
                     Lamp element = mLampList.get(mPosition);
-                    element.toggleLamp(!LampSwitchItemView.isChecked());
-                    LampSwitchItemView.setChecked(!LampSwitchItemView.isChecked());
+                    element.toggleLamp(LampSwitchItemView.isChecked());
+                    //LampSwitchItemView.setChecked(!LampSwitchItemView.isChecked());
                 }
             });
             LampImageItemView = itemView.findViewById(R.id.LampImage);
