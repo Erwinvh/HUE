@@ -34,6 +34,15 @@ public class LampAdapter extends RecyclerView.Adapter<LampAdapter.LampViewHolder
 
     }
 
+    public void clear() {
+        mLampList.clear();
+        notifyDataSetChanged();
+    }
+
+    public void addAll(LinkedList<Lamp> list) {
+        mLampList.addAll(list);
+        notifyDataSetChanged();
+    }
 
     /**
      * Returns the total number of items in the data set held by the adapter.

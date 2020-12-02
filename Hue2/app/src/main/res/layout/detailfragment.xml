@@ -11,7 +11,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:editable="false"
         android:text="@string/nullText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,21 +20,10 @@
         android:id="@+id/switchDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
-        android:text="ON/OFF"
+        android:text="OFF/ON"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/LampInfo"
-        app:layout_constraintTop_toBottomOf="@+id/LampNameDetail" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/LampInfo"
-        android:layout_width="287dp"
-        android:layout_height="138dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/LampNameDetail" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -62,15 +50,23 @@
         android:text="Pick Color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LampInfo" />
+        app:layout_constraintTop_toBottomOf="@+id/LampNameDetail" />
 
-    <ImageView
-        android:id="@+id/preview_selected_color"
-        android:layout_width="245dp"
-        android:layout_height="214dp"
+    <androidx.cardview.widget.CardView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:cardCornerRadius="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pick_color_button"
-        app:srcCompat="@android:drawable/arrow_down_float" />
+        app:layout_constraintTop_toBottomOf="@+id/pick_color_button">
+
+        <ImageView
+            android:id="@+id/preview_selected_color"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ic_lampimage" />
+    </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

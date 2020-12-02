@@ -3,15 +3,15 @@ package com.example.hue.fragments;
 import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,6 +30,8 @@ public class detailfragment extends Fragment {
     private int mDefaultColor = 0;
     private Button mPickColorButton;
     private View mColorPreview;
+    private EditText LampName;
+    private boolean editable = false;
 
     @Nullable
     @Override
@@ -41,17 +43,24 @@ public class detailfragment extends Fragment {
         View RootView = inflater.inflate(R.layout.detailfragment, container, false);
 
         //NAME
-        final EditText LampNaam = (EditText) RootView.findViewById(R.id.LampNameDetail);
-        LampNaam.setText(subjectLamp.getLampName());
+        LampName = (EditText) RootView.findViewById(R.id.LampNameDetail);
+        LampName.setText(subjectLamp.getLampName());
+
 
         //ON/OFF
         final Switch LampSwitch = (Switch) RootView.findViewById(R.id.switchDetail);
         LampSwitch.setChecked(subjectLamp.getLampState());
-        LampSwitch.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                subjectLamp.toggleLamp(!LampSwitch.isChecked());
-                LampSwitch.setChecked(!LampSwitch.isChecked());
+        LampSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                subjectLamp.toggleLamp(!LampSwitch.isChecked());
+//                LampSwitch.setChecked(!LampSwitch.isChecked());
+                if (!LampSwitch.isChecked()){
+                    mColorPreview.setBackgroundColor(Color.BLACK);
+                }
+                else{
+                    mColorPreview.setBackgroundColor(mDefaultColor);
+                }
+
             }
         });
 
@@ -61,15 +70,16 @@ public class detailfragment extends Fragment {
             @SuppressLint("ResourceAsColor")
             @Override
             public void onClick(View v) {
-                if (LampNaam.isEnabled()){
-                    String NewName = LampNaam.getText().toString();
+                if (editable){
+                    String NewName = LampName.getText().toString();
                     subjectLamp.setName(NewName);
-                    LampNaam.setEnabled(false);
+                    editable = false;
                     EditNameButton.setBackgroundTintList(null);
                 }else{
-                    LampNaam.setEnabled(true);
+                    editable = true;
                     EditNameButton.setBackgroundTintList(ColorStateList.valueOf(R.color.EditGreen));
                 }
+                toggleEditableName(editable);
             }
         });
 
@@ -84,7 +94,6 @@ public class detailfragment extends Fragment {
                     public void onClick(final View v) {
                         new ColorPickerPopup.Builder(getContext()).initialColor(Color.RED)
                                 .enableBrightness(true)
-                                .enableAlpha(true)
                                 .okTitle("Choose")
                                 .cancelTitle("Cancel")
                                 .showIndicator(true)
@@ -106,4 +115,13 @@ public class detailfragment extends Fragment {
 
         return RootView;
     }
+
+    public void toggleEditableName(boolean bool){
+        LampName.setEnabled(bool);
+        LampName.setFocusable(bool);
+
+    }
+
+
+
 }

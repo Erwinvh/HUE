@@ -12,27 +12,11 @@ import com.example.hue.fragments.masterfragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FragmentStateAdapter pagerAdapter;
-    private ViewPager2 viewPager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        viewPager = findViewById(R.id.Container);
-        pagerAdapter = new FragmentStateAdapter(this) {
-            @NonNull
-            @Override
-            public Fragment createFragment(int position) {
-                return null;
-            }
 
-            @Override
-            public int getItemCount() {
-                return 0;
-            }
-        };
-        viewPager.setAdapter(pagerAdapter);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.Container, new masterfragment()).commit();
     }

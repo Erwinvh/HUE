@@ -38,7 +38,7 @@ public class Lamp implements Parcelable {
 
     public String getLampName() {
         //TODO:
-        return "";
+        return "lamp test value";
     }
 
     public int getLampImageResource() {
