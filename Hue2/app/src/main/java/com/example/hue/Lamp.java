@@ -1,5 +1,6 @@
 package com.example.hue;
 
+import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -57,5 +58,10 @@ public class Lamp implements Parcelable {
 
     public void toggleLamp(boolean b) {
         //TODO:
+    }
+
+    public int getLampColor() {
+        //TODO:
+        return Color.GREEN;
     }
 }

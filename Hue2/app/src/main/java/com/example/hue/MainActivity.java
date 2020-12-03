@@ -1,14 +1,12 @@
 package com.example.hue;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
-import androidx.viewpager2.widget.ViewPager2;
-
 import android.os.Bundle;
 
+import com.example.hue.fragments.detailfragment;
 import com.example.hue.fragments.masterfragment;
+import com.example.hue.fragments.settingsfragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,4 +18,14 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().replace(R.id.Container, new masterfragment()).commit();
     }
+
+    @Override
+    public void onBackPressed() {
+        Fragment current = (Fragment) this.getSupportFragmentManager().findFragmentById(R.id.Container);
+        if (current instanceof detailfragment||current instanceof settingsfragment){
+            getSupportFragmentManager().beginTransaction().replace(R.id.Container, new masterfragment()).commit();
+        }
+
+    }
+
 }

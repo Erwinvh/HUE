@@ -3,8 +3,8 @@ package com.example.hue.fragments;
 import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +28,6 @@ public class detailfragment extends Fragment {
     private Lamp subjectLamp;
 
     private int mDefaultColor = 0;
-    private Button mPickColorButton;
     private View mColorPreview;
     private EditText LampName;
     private boolean editable = false;
@@ -45,6 +44,7 @@ public class detailfragment extends Fragment {
         //NAME
         LampName = (EditText) RootView.findViewById(R.id.LampNameDetail);
         LampName.setText(subjectLamp.getLampName());
+        toggleEditableName(editable);
 
 
         //ON/OFF
@@ -65,6 +65,7 @@ public class detailfragment extends Fragment {
 
         //EDIT NAME BUTTON
         final FloatingActionButton EditNameButton = (FloatingActionButton)  RootView.findViewById(R.id.EditNameButton);
+        EditNameButton.setBackgroundTintList(null);
         EditNameButton.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("ResourceAsColor")
             @Override
@@ -74,24 +75,35 @@ public class detailfragment extends Fragment {
                     subjectLamp.setName(NewName);
                     editable = false;
                     EditNameButton.setBackgroundTintList(null);
+                    //InputMethodManager imm = (InputMethodManager) getContext().getSystemService(getContext().INPUT_METHOD_SERVICE);
+                    //imm.hideSoftInputFromWindow(LampName.getWindowToken(), 0);
                 }else{
                     editable = true;
-                    EditNameButton.setBackgroundTintList(ColorStateList.valueOf(R.color.EditGreen));
+                    EditNameButton.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
+                    LampName.requestFocus();
+                    //InputMethodManager imm = (InputMethodManager) getContext().getSystemService(getContext().INPUT_METHOD_SERVICE);
+                    //imm.showSoftInput(LampName, InputMethodManager.SHOW_IMPLICIT);
+                    Log.d("Color back to green", "Yes");
                 }
                 toggleEditableName(editable);
             }
         });
 
-        //TODO: add colorwheel picker
+        //Color
         Button mPickColorButton = (Button) RootView.findViewById(R.id.pick_color_button);;
- mDefaultColor = 0;
+ mDefaultColor = subjectLamp.getLampColor();
        // mSetColorButton = RootView.findViewById(R.id.set_color_button);
         mColorPreview = RootView.findViewById(R.id.preview_selected_color);
+        if (LampSwitch.isChecked()){
+            mColorPreview.setBackgroundColor(mDefaultColor);
+        }else{
+            mColorPreview.setBackgroundColor(Color.BLACK);
+        }
         mPickColorButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(final View v) {
-                        new ColorPickerPopup.Builder(getContext()).initialColor(Color.RED)
+                        new ColorPickerPopup.Builder(getContext()).initialColor(mDefaultColor)
                                 .enableBrightness(true)
                                 .okTitle("Choose")
                                 .cancelTitle("Cancel")
@@ -105,7 +117,10 @@ public class detailfragment extends Fragment {
                                             public void
                                             onColorPicked(int color) {
                                                 mDefaultColor = color;
+                                                if (LampSwitch.isChecked()){
                                                 mColorPreview.setBackgroundColor(mDefaultColor);
+                                                }
+
                                             }
                                         });
                     }
@@ -120,7 +135,4 @@ public class detailfragment extends Fragment {
         LampName.setFocusable(bool);
 
     }
-
-
-
 }
