@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import com.example.hue.Lamp;
 import com.example.hue.R;
 import com.example.hue.model.Light;
+import com.example.hue.service.HueService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import top.defaults.colorpicker.ColorPickerPopup;
@@ -28,12 +29,14 @@ import top.defaults.colorpicker.ColorPickerPopup;
 public class detailfragment extends Fragment {
 
     private Light subjectLamp;
+    private HueService hueService;
 
     private int mDefaultColor = 0;
     private View mColorPreview;
     private EditText LampName;
     private boolean editable = false;
     private Switch LampSwitch;
+    private String subjectKey;
 
     private Color rgb;
     private float[] hsl;
@@ -44,9 +47,13 @@ public class detailfragment extends Fragment {
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            subjectLamp = bundle.getParcelable("LampInfo"); // Key
+            subjectLamp = bundle.getParcelable("LampInfo"); // Value
+            subjectKey = bundle.getString("LampKey"); // Light number
         }
         View RootView = inflater.inflate(R.layout.detailfragment, container, false);
+
+        // Initalise HueService
+        hueService = new HueService();
 
         //NAME
         LampName = (EditText) RootView.findViewById(R.id.LampNameDetail);
@@ -65,7 +72,7 @@ public class detailfragment extends Fragment {
                 else{
                     mColorPreview.setBackgroundColor(mDefaultColor);
                 }
-
+        hueService.updateOn(subjectKey, LampSwitch.isChecked());
             }
         });
 
@@ -81,6 +88,7 @@ public class detailfragment extends Fragment {
                     subjectLamp.setName(NewName);
                     editable = false;
                     EditNameButton.setBackgroundTintList(null);
+                    hueService.updateName(subjectKey, NewName);
                     //InputMethodManager imm = (InputMethodManager) getContext().getSystemService(getContext().INPUT_METHOD_SERVICE);
                     //imm.hideSoftInputFromWindow(LampName.getWindowToken(), 0);
                 }else{
@@ -98,9 +106,9 @@ public class detailfragment extends Fragment {
         //Color
         Button mPickColorButton = (Button) RootView.findViewById(R.id.pick_color_button);;
         float[] hsvfloat = new float[3];
-        hsvfloat[0] = subjectLamp.getState().getHue();
-        hsvfloat[1] = subjectLamp.getState().getSat();
-        hsvfloat[2] = 255;
+        hsvfloat[0] = (float) (subjectLamp.getState().getHue() / 182.0444);
+        hsvfloat[1] = (float) (subjectLamp.getState().getSat() / 2.55);
+        hsvfloat[2] = 100;
         mDefaultColor = Color.HSVToColor(hsvfloat);
         mColorPreview = RootView.findViewById(R.id.preview_selected_color);
         if (LampSwitch.isChecked()){
@@ -129,8 +137,15 @@ public class detailfragment extends Fragment {
                                                     mDefaultColor = color;
                                                     float[] hue = new float[3];
                                                     Color.RGBToHSV(Color.red(color), Color.green(color), Color.blue(color), hue);
+
+                                                    hueService.updateSat(subjectKey, (int) (hue[1] * 255));
+                                                    hueService.updateHue(subjectKey, (int) (hue[0] * 182));
+                                                    hueService.updateBri(subjectKey, (int) (hue[2] * 255));
+                                                    Log.d(getClass().getSimpleName(), "[" + hue[0] + ", " + hue[1] + ", " + hue[2] + "]");
+
                                                     subjectLamp.getState().setHue((int) hue[0]);
                                                     subjectLamp.getState().setSat((int) hue[1]);
+                                                    subjectLamp.getState().setBri((int) hue[2]);
                                                     if (LampSwitch.isChecked()) {
                                                         mColorPreview.setBackgroundColor(mDefaultColor);
                                                     }

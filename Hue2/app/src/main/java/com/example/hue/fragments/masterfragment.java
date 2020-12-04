@@ -34,7 +34,7 @@ public class masterfragment extends Fragment {
     private LampAdapter mAdapter;
     private List<Light> mLampList;
     private SwipeRefreshLayout swipeContainer;
-    private HueService service = new HueService();
+    private HueService hueService = new HueService();
 
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
         View RootView = inflater.inflate(R.layout.masterfragment, container, false);
@@ -80,6 +80,11 @@ public class masterfragment extends Fragment {
     }
 
     public void fetchLampListAsync() {
+        hueService.getLights();
+
+        mAdapter.clear();
+        mAdapter.addAll(new ArrayList<Light>(Lighting.getINSTANCE().getLights().values()));
+
         //Source: https://guides.codepath.com/android/implementing-pull-to-refresh-guide
 
         //TODO: remove testcode:

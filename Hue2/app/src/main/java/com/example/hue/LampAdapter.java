@@ -3,6 +3,7 @@ package com.example.hue;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hue.fragments.detailfragment;
 import com.example.hue.model.Light;
+import com.example.hue.model.Lighting;
+import com.example.hue.service.HueService;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,11 +30,13 @@ public class LampAdapter extends RecyclerView.Adapter<LampAdapter.LampViewHolder
     private List<Light> mLampList;
     private final LayoutInflater mInflator;
     private Fragment mMasterfragment;
+    private HueService hueService;
 
     public LampAdapter(Context context, List<Light> projectList, Fragment masterFragment) {
         this.mMasterfragment = masterFragment;
         mInflator = LayoutInflater.from(context);
         this.mLampList = projectList;
+        this.hueService = new HueService();
     }
 
     public void clear() {
@@ -38,7 +44,7 @@ public class LampAdapter extends RecyclerView.Adapter<LampAdapter.LampViewHolder
         notifyDataSetChanged();
     }
 
-    public void addAll(LinkedList<Light> list) {
+    public void addAll(ArrayList<Light> list) {
         mLampList.addAll(list);
         notifyDataSetChanged();
     }
@@ -127,6 +133,7 @@ public class LampAdapter extends RecyclerView.Adapter<LampAdapter.LampViewHolder
                     int mPosition = getLayoutPosition();
                     Light element = mLampList.get(mPosition);
                     element.getState().setOn(LampSwitchItemView.isChecked());
+                    hueService.updateOn(Integer.toString(mPosition + 1), LampSwitchItemView.isChecked());
                     //LampSwitchItemView.setChecked(!LampSwitchItemView.isChecked());
                 }
             });
@@ -144,6 +151,7 @@ public class LampAdapter extends RecyclerView.Adapter<LampAdapter.LampViewHolder
                 Fragment LampDetailFragment = new detailfragment();
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("LampInfo",  element); // Key, value
+                bundle.putString("LampKey", Integer.toString(mPosition + 1)); //
                 LampDetailFragment.setArguments(bundle);
                 ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.Container, LampDetailFragment).commit();
             }
