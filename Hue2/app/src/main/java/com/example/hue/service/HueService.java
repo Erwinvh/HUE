@@ -34,14 +34,6 @@ public class HueService implements IHueService {
         getService("http://10.0.2.2:8000/api/newdeveloper/lights/");
     }
 
-    // TODO Create functions for other variables if necessary:
-    // - Modelid
-    // - swversion
-    // - state/reachable
-    // - type
-    // - pointsymbol
-    // - uniqueid
-
     public boolean updateName(String lightNumber, String name) {
         if (putServiceHelper(lightNumber, "name", name)) {
             Lighting.getINSTANCE().getLight(lightNumber).setName(name);
@@ -50,43 +42,9 @@ public class HueService implements IHueService {
         return false;
     }
 
-    @Deprecated
-    public boolean updateXY(String lightNumber, List<Double> xy) {
-        String body = "{\"xy\":[" + xy.get(0) + "," + xy.get(1) + "]}";
-        if (putServiceHelper(lightNumber, "xy", RequestBody.create(body.getBytes()))) {
-            Lighting.getINSTANCE().getLight(lightNumber).getState().setXy(xy);
-            return true;
-        }
-        return false;
-    }
-
-    public boolean updateCt(String lightNumber, int ct) {
-        if (putServiceHelper(lightNumber, "ct", Integer.toString(ct))) {
-            Lighting.getINSTANCE().getLight(lightNumber).getState().setCt(ct);
-            return true;
-        }
-        return false;
-    }
-
-    public boolean updateAlert(String lightNumber, String alert) {
-        if (putServiceHelper(lightNumber, "alert", alert)) {
-            Lighting.getINSTANCE().getLight(lightNumber).getState().setAlert(alert);
-            return true;
-        }
-        return false;
-    }
-
     public boolean updateSat(String lightNumber, int sat) {
         if (putServiceHelper(lightNumber, "sat", Integer.toString(sat))) {
             Lighting.getINSTANCE().getLight(lightNumber).getState().setSat(sat);
-            return true;
-        }
-        return false;
-    }
-
-    public boolean updateEffect(String lightNumber, String effect) {
-        if (putServiceHelper(lightNumber, "effect", effect)) {
-            Lighting.getINSTANCE().getLight(lightNumber).getState().setEffect(effect);
             return true;
         }
         return false;
@@ -102,15 +60,7 @@ public class HueService implements IHueService {
 
     public boolean updateHue(String lightNumber, int hue) {
         if (putServiceHelper(lightNumber, "hue", Integer.toString(hue))) {
-            Lighting.getINSTANCE().getLight(lightNumber).getState().setCt(hue);
-            return true;
-        }
-        return false;
-    }
-
-    public boolean updateColorMode(String lightNumber, String colormode) {
-        if (putServiceHelper(lightNumber, "colormode", colormode)) {
-            Lighting.getINSTANCE().getLight(lightNumber).getState().setColormode(colormode);
+            Lighting.getINSTANCE().getLight(lightNumber).getState().setHue(hue);
             return true;
         }
         return false;
@@ -124,9 +74,12 @@ public class HueService implements IHueService {
         return false;
     }
 
-    private boolean putServiceHelper(String lightNumber, String variable, RequestBody requestBody) {
+    private boolean putServiceHelper(String lightNumber, String variable, String value) {
         String service = "http://10.0.2.2:8000/api/newdeveloper/lights/" + lightNumber;
         if (!variable.contains("name")) service += "/state";
+
+        String body = "{\"" + variable + "\":\"" + variable + "\"}";
+        RequestBody requestBody = RequestBody.create(body.getBytes());
 
         if (putService(service, requestBody)) {
             Log.d(TAG, "Test putService successful.");
@@ -135,11 +88,6 @@ public class HueService implements IHueService {
             Log.d(TAG, "Test putService failed.");
             return false;
         }
-    }
-
-    private boolean putServiceHelper(String lightNumber, String variable, String value) {
-        String body = "{\"" + variable + "\":\"" + value + "\"}";
-        return putServiceHelper(lightNumber, variable, RequestBody.create(body.getBytes()));
     }
 
     @Override

@@ -1,5 +1,8 @@
 <resources>
-    <string name="app_name">Hue</string>
-    <string name="nullText">TextView</string>
-    <string name="AppName">HUE</string>
+    <string name="app_name" translatable="false">Hue</string>
+    <string name="nullText" translatable="false">TextView</string>
+    <string name="AppName" translatable="false">HUE</string>
+    <string name="settings">SETTINGS</string>
+    <string name="onoff">OFF/ON</string>
+    <string name="pickColor">PICK COLOR</string>
 </resources>

@@ -1,23 +1,18 @@
 package com.example.hue.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.hue.Lamp;
 import com.example.hue.LampAdapter;
 import com.example.hue.R;
 import com.example.hue.model.Light;
@@ -25,7 +20,6 @@ import com.example.hue.model.Lighting;
 import com.example.hue.service.HueService;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class masterfragment extends Fragment {
@@ -86,29 +80,9 @@ public class masterfragment extends Fragment {
         mAdapter.addAll(new ArrayList<Light>(Lighting.getINSTANCE().getLights().values()));
 
         //Source: https://guides.codepath.com/android/implementing-pull-to-refresh-guide
-
-        //TODO: remove testcode:
         Toast toast = Toast. makeText(getContext().getApplicationContext(), "You refreshed the list", Toast. LENGTH_SHORT); toast. show();
         swipeContainer.setRefreshing(false);
-        //End testcode
 
-        // Send the network request to fetch the updated data
-        // `client` here is an instance of Android Async HTTP
-        // getHomeTimeline is an example endpoint.
-
-        //TODO: fix this to acttually work
-        //TODO: this is the handler to pull new data from the emulator
-//        client.getHomeTimeline(new OkHttpResponseHandler() {
-//            public void onSuccess() {
-//                mAdapter.clear();
-//                mAdapter.addAll(new LinkedList<Lamp>());
-//                swipeContainer.setRefreshing(false);
-//            }
-//
-//            public void onFailure(Throwable e) {
-//                Log.d("DEBUG", "Fetch timeline error: " + e.toString());
-//            }
-//        });
     }
 
 

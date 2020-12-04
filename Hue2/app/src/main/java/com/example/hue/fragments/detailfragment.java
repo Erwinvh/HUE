@@ -18,7 +18,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.hue.Lamp;
 import com.example.hue.R;
 import com.example.hue.model.Light;
 import com.example.hue.service.HueService;
@@ -108,7 +107,7 @@ public class detailfragment extends Fragment {
         float[] hsvfloat = new float[3];
         hsvfloat[0] = (float) (subjectLamp.getState().getHue() / 182.0444);
         hsvfloat[1] = (float) (subjectLamp.getState().getSat() / 2.55);
-        hsvfloat[2] = 100;
+        hsvfloat[2] = (float) (subjectLamp.getState().getBri() / 2.55);;
         mDefaultColor = Color.HSVToColor(hsvfloat);
         mColorPreview = RootView.findViewById(R.id.preview_selected_color);
         if (LampSwitch.isChecked()){
