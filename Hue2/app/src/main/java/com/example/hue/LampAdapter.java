@@ -16,23 +16,21 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hue.fragments.detailfragment;
+import com.example.hue.model.Light;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class LampAdapter extends RecyclerView.Adapter<LampAdapter.LampViewHolder> {
 
-    private LinkedList<Lamp> mLampList;
+    private List<Light> mLampList;
     private final LayoutInflater mInflator;
     private Fragment mMasterfragment;
 
-    public LampAdapter(Context context, LinkedList<Lamp> projectList, Fragment masterFragment) {
+    public LampAdapter(Context context, List<Light> projectList, Fragment masterFragment) {
         this.mMasterfragment = masterFragment;
         mInflator = LayoutInflater.from(context);
         this.mLampList = projectList;
-
-        //TEST code, remove in final
-        this.mLampList.add(new Lamp());
-
     }
 
     public void clear() {
@@ -40,7 +38,7 @@ public class LampAdapter extends RecyclerView.Adapter<LampAdapter.LampViewHolder
         notifyDataSetChanged();
     }
 
-    public void addAll(LinkedList<Lamp> list) {
+    public void addAll(LinkedList<Light> list) {
         mLampList.addAll(list);
         notifyDataSetChanged();
     }
@@ -68,12 +66,12 @@ public class LampAdapter extends RecyclerView.Adapter<LampAdapter.LampViewHolder
      */
     @Override
     public void onBindViewHolder(LampAdapter.LampViewHolder holder, int position) {
-        Lamp current = mLampList.get(position);
-        String mCurrent = current.getLampName();
+        Light current = mLampList.get(position);
+        String mCurrent = current.getName();
         holder.LampNameItemView.setText(mCurrent);
-        int iCurrent = current.getLampImageResource();
-        holder.LampImageItemView.setImageResource(iCurrent);
-        boolean mState = current.getLampState();
+//        int iCurrent = current.getLampImageResource();
+//        holder.LampImageItemView.setImageResource(iCurrent);
+        boolean mState = current.getState().isOn();
         holder.LampSwitchItemView.setChecked(mState);
     }
 
@@ -127,8 +125,8 @@ public class LampAdapter extends RecyclerView.Adapter<LampAdapter.LampViewHolder
             LampSwitchItemView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     int mPosition = getLayoutPosition();
-                    Lamp element = mLampList.get(mPosition);
-                    element.toggleLamp(LampSwitchItemView.isChecked());
+                    Light element = mLampList.get(mPosition);
+                    element.getState().setOn(LampSwitchItemView.isChecked());
                     //LampSwitchItemView.setChecked(!LampSwitchItemView.isChecked());
                 }
             });
@@ -141,7 +139,7 @@ public class LampAdapter extends RecyclerView.Adapter<LampAdapter.LampViewHolder
         public void onClick(View v) {
             final Intent intent;
             int mPosition = getLayoutPosition();
-            Lamp element = mLampList.get(mPosition);
+            Light element = mLampList.get(mPosition);
             if (element!=null){
                 Fragment LampDetailFragment = new detailfragment();
                 Bundle bundle = new Bundle();

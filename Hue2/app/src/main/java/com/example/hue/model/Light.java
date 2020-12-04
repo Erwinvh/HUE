@@ -1,12 +1,15 @@
 package com.example.hue.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 
 
-public class Light {
+public class Light implements Parcelable {
     private String modelid;
     private String name;
     private String swversion;
@@ -30,6 +33,26 @@ public class Light {
             this.pointsymbol.put(key, (jsonPointsymbol.getString(Integer.toString(key))));
         }
     }
+
+    protected Light(Parcel in) {
+        modelid = in.readString();
+        name = in.readString();
+        swversion = in.readString();
+        type = in.readString();
+        uniqueid = in.readString();
+    }
+
+    public static final Creator<Light> CREATOR = new Creator<Light>() {
+        @Override
+        public Light createFromParcel(Parcel in) {
+            return new Light(in);
+        }
+
+        @Override
+        public Light[] newArray(int size) {
+            return new Light[size];
+        }
+    };
 
     public String getModelid() {
         return modelid;
@@ -61,5 +84,19 @@ public class Light {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(modelid);
+        dest.writeString(name);
+        dest.writeString(swversion);
+        dest.writeString(type);
+        dest.writeString(uniqueid);
     }
 }

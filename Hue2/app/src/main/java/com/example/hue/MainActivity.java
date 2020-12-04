@@ -7,14 +7,19 @@ import android.os.Bundle;
 import com.example.hue.fragments.detailfragment;
 import com.example.hue.fragments.masterfragment;
 import com.example.hue.fragments.settingsfragment;
+import com.example.hue.service.HueService;
 
 public class MainActivity extends AppCompatActivity {
+
+    public HueService service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        service = new HueService();
+        service.getLights();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.Container, new masterfragment()).commit();
     }

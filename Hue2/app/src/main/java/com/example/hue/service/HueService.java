@@ -212,6 +212,7 @@ public class HueService implements IHueService {
             try {
                 Light light = new Light(json.getJSONObject(key));
                 newLighting.put(key, light);
+
             } catch (JSONException e) {
                 Log.d("HueService.java", e.getLocalizedMessage());
             }
