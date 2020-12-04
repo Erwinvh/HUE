@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="settings">INSTELLINGEN</string>
     <string name="onoff">UIT/AAN</string>
     <string name="pickColor">KIES KLEUR</string>
+    <string name="failed_send_response">Bericht versturen mislukt.</string>
+    <string name="failed_receive_response">Bericht ontvangen mislukt.</string>
+    <string name="turn_on_light">Zet het licht aan om de kleur te veranderen.</string>
+    <string name="list_refreshed">Je hebt de lijst herladen.</string>
 </resources>

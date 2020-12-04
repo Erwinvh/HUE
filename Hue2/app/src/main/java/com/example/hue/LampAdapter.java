@@ -1,5 +1,6 @@
 package com.example.hue;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,7 +37,7 @@ public class LampAdapter extends RecyclerView.Adapter<LampAdapter.LampViewHolder
         this.mMasterfragment = masterFragment;
         mInflator = LayoutInflater.from(context);
         this.mLampList = projectList;
-        this.hueService = new HueService();
+        this.hueService = new HueService(context);
     }
 
     public void clear() {
@@ -75,8 +76,7 @@ public class LampAdapter extends RecyclerView.Adapter<LampAdapter.LampViewHolder
         Light current = mLampList.get(position);
         String mCurrent = current.getName();
         holder.LampNameItemView.setText(mCurrent);
-//        int iCurrent = current.getLampImageResource();
-//        holder.LampImageItemView.setImageResource(iCurrent);
+
         boolean mState = current.getState().isOn();
         holder.LampSwitchItemView.setChecked(mState);
     }

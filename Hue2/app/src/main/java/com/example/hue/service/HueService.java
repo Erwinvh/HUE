@@ -1,7 +1,10 @@
 package com.example.hue.service;
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.example.hue.R;
 import com.example.hue.model.Light;
 import com.example.hue.model.Lighting;
 
@@ -10,10 +13,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -26,21 +28,25 @@ public class HueService implements IHueService {
 
     private final String TAG = getClass().getSimpleName();
 
-    private OkHttpClient client = new OkHttpClient();
-    volatile boolean hasCallbackEnded = false;
-    volatile boolean isPutServiceSuccess = false;
+    private OkHttpClient client;
+    volatile boolean hasCallbackEnded;
+    volatile boolean isPutServiceSuccess;
+    private Context context;
+
+    public HueService(Context context) {
+        this.client = new OkHttpClient.Builder()
+                .connectTimeout(1000, TimeUnit.MILLISECONDS)
+                .readTimeout(1000, TimeUnit.MILLISECONDS)
+                .writeTimeout(1000, TimeUnit.MILLISECONDS)
+                .build();
+        this.hasCallbackEnded = false;
+        this.isPutServiceSuccess = false;
+        this.context = context;
+    }
 
     public void getLights() {
         getService("http://10.0.2.2:8000/api/newdeveloper/lights/");
     }
-
-    // TODO Create functions for other variables if necessary:
-    // - Modelid
-    // - swversion
-    // - state/reachable
-    // - type
-    // - pointsymbol
-    // - uniqueid
 
     public boolean updateName(String lightNumber, String name) {
         if (putServiceHelper(lightNumber, "name", name)) {
@@ -50,8 +56,6 @@ public class HueService implements IHueService {
         return false;
     }
 
-
-
     public boolean updateSat(String lightNumber, int sat) {
         if (putServiceHelper(lightNumber, "sat", Integer.toString(sat))) {
             Lighting.getINSTANCE().getLight(lightNumber).getState().setSat(sat);
@@ -59,8 +63,6 @@ public class HueService implements IHueService {
         }
         return false;
     }
-
-
 
     public boolean updateBri(String lightNumber, int bri) {
         if (putServiceHelper(lightNumber, "bri", Integer.toString(bri))) {

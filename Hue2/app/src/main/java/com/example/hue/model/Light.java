@@ -6,9 +6,6 @@ import android.os.Parcelable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-
-
 public class Light implements Parcelable {
     private String name;
     private State state;

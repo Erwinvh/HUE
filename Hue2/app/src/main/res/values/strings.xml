@@ -2,7 +2,10 @@
     <string name="app_name" translatable="false">Hue</string>
     <string name="nullText" translatable="false">TextView</string>
     <string name="AppName" translatable="false">HUE</string>
-    <string name="settings">SETTINGS</string>
     <string name="onoff">OFF/ON</string>
     <string name="pickColor">PICK COLOR</string>
+    <string name="failed_send_response">Failed to send a response.</string>
+    <string name="failed_receive_response">Failed to receive a response.</string>
+    <string name="turn_on_light">Turn on the light to change the color.</string>
+    <string name="list_refreshed">You refreshed the list.</string>
 </resources>

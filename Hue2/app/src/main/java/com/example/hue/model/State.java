@@ -39,9 +39,13 @@ public class State {
         this.sat = sat;
     }
 
-    public void setBri(int bri) { this.bri = bri; }
+    public void setBri(int bri) {
+        this.bri = bri;
+    }
 
-    public int getBri() { return bri; }
+    public int getBri() {
+        return bri;
+    }
 
     public void setHue(int hue) {
         this.hue = hue;

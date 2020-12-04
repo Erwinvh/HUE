@@ -37,10 +37,6 @@ public class detailfragment extends Fragment {
     private Switch LampSwitch;
     private String subjectKey;
 
-    private Color rgb;
-    private float[] hsl;
-    private float alpha;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
@@ -52,7 +48,7 @@ public class detailfragment extends Fragment {
         View RootView = inflater.inflate(R.layout.detailfragment, container, false);
 
         // Initalise HueService
-        hueService = new HueService();
+        hueService = new HueService(getContext());
 
         //NAME
         LampName = (EditText) RootView.findViewById(R.id.LampNameDetail);
@@ -107,7 +103,7 @@ public class detailfragment extends Fragment {
         float[] hsvfloat = new float[3];
         hsvfloat[0] = (float) (subjectLamp.getState().getHue() / 182.0444);
         hsvfloat[1] = (float) (subjectLamp.getState().getSat() / 2.55);
-        hsvfloat[2] = (float) (subjectLamp.getState().getBri() / 2.55);;
+        hsvfloat[2] = (float) (subjectLamp.getState().getBri() / 2.55);
         mDefaultColor = Color.HSVToColor(hsvfloat);
         mColorPreview = RootView.findViewById(R.id.preview_selected_color);
         if (LampSwitch.isChecked()){
@@ -151,7 +147,7 @@ public class detailfragment extends Fragment {
                                                 }
                                             });
                         } else{
-                            Toast.makeText(getContext().getApplicationContext(),"Turn on the lamp to change its color",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext().getApplicationContext(),getResources().getString(R.string.turn_on_light),Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

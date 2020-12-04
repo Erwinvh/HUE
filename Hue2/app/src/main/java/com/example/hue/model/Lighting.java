@@ -32,8 +32,4 @@ public class Lighting {
     public HashMap<String, Light> getLights() {
         return lights;
     }
-
-    public int getNumberOfLights() {
-        return numberOfLights;
-    }
 }

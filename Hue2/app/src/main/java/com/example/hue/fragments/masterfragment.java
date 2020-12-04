@@ -28,22 +28,13 @@ public class masterfragment extends Fragment {
     private LampAdapter mAdapter;
     private List<Light> mLampList;
     private SwipeRefreshLayout swipeContainer;
-    private HueService hueService = new HueService();
+    private HueService hueService = new HueService(getContext());
 
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
         View RootView = inflater.inflate(R.layout.masterfragment, container, false);
         mLampList = new ArrayList<Light>(Lighting.getINSTANCE().getLights().values());
-//        Button SettingsButton = (Button) RootView.findViewById(R.id.SettingsButton);
-//        SettingsButton.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v) {
-//                final Intent intent;
-//                    Fragment LampDetailFragment = new settingsfragment();
-//                    //((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.Container, LampDetailFragment).commit();
-//
-//            }
-//        });
-// Create recycler view.
+
+        // Create recycler view.
         mRecyclerView = RootView.findViewById(R.id.recyclerView);
         // Create an adapter and supply the data to be displayed.
         mAdapter = new LampAdapter(getContext(), mLampList, this);
@@ -53,22 +44,20 @@ public class masterfragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         swipeContainer = (SwipeRefreshLayout) RootView.findViewById(R.id.swipeContainer);
+
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                // Your code to refresh the list here.
-                // Make sure you call swipeContainer.setRefreshing(false)
-                // once the network request has completed successfully.
                 fetchLampListAsync();
             }
         });
+
         // Configure the refreshing colors
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-
 
         return RootView;
     }
@@ -80,7 +69,7 @@ public class masterfragment extends Fragment {
         mAdapter.addAll(new ArrayList<Light>(Lighting.getINSTANCE().getLights().values()));
 
         //Source: https://guides.codepath.com/android/implementing-pull-to-refresh-guide
-        Toast toast = Toast. makeText(getContext().getApplicationContext(), "You refreshed the list", Toast. LENGTH_SHORT); toast. show();
+        Toast toast = Toast.makeText(getContext().getApplicationContext(), getResources().getString(R.string.list_refreshed), Toast. LENGTH_SHORT); toast. show();
         swipeContainer.setRefreshing(false);
 
     }
