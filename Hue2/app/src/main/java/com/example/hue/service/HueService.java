@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -35,6 +34,14 @@ public class HueService implements IHueService {
         getService("http://10.0.2.2:8000/api/newdeveloper/lights/");
     }
 
+    // TODO Create functions for other variables if necessary:
+    // - Modelid
+    // - swversion
+    // - state/reachable
+    // - type
+    // - pointsymbol
+    // - uniqueid
+
     public boolean updateName(String lightNumber, String name) {
         if (putServiceHelper(lightNumber, "name", name)) {
             Lighting.getINSTANCE().getLight(lightNumber).setName(name);
@@ -43,6 +50,8 @@ public class HueService implements IHueService {
         return false;
     }
 
+
+
     public boolean updateSat(String lightNumber, int sat) {
         if (putServiceHelper(lightNumber, "sat", Integer.toString(sat))) {
             Lighting.getINSTANCE().getLight(lightNumber).getState().setSat(sat);
@@ -50,6 +59,8 @@ public class HueService implements IHueService {
         }
         return false;
     }
+
+
 
     public boolean updateBri(String lightNumber, int bri) {
         if (putServiceHelper(lightNumber, "bri", Integer.toString(bri))) {
@@ -67,6 +78,7 @@ public class HueService implements IHueService {
         return false;
     }
 
+
     public boolean updateOn(String lightNumber, boolean on) {
         if (putServiceHelper(lightNumber, "on", Boolean.toString(on))) {
             Lighting.getINSTANCE().getLight(lightNumber).getState().setOn(on);
@@ -79,10 +91,16 @@ public class HueService implements IHueService {
         String service = "http://10.0.2.2:8000/api/newdeveloper/lights/" + lightNumber;
         if (!variable.contains("name")) service += "/state";
 
-        String body = "{\"" + variable + "\":\"" + variable + "\"}";
+        String body = "{\"" + variable + "\":\"" + value + "\"}";
         RequestBody requestBody = RequestBody.create(body.getBytes());
 
-        return putService(service, requestBody);
+        if (putService(service, requestBody)) {
+            Log.d(TAG, "Test putService successful.");
+            return true;
+        } else {
+            Log.d(TAG, "Test putService failed.");
+            return false;
+        }
     }
 
     @Override
@@ -133,19 +151,10 @@ public class HueService implements IHueService {
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    try {
-                        String json = response.body().string();
-                        Log.d(TAG, "Received response  " + json);
-                        isPutServiceSuccess = json.length() > 20 && json.contains("\"success\":");
-                        hasCallbackEnded = true;
-                    } catch (IOException e) {
-                        isPutServiceSuccess = false;
-                        hasCallbackEnded = true;
-                        Log.d(TAG, Objects.requireNonNull(e.getLocalizedMessage()));
-                    }
-                }
-
+                String json = response.body().string();
+                Log.d(TAG, "Received response  " + json);
+                isPutServiceSuccess = json.length() > 20 && json.contains("\"success\":");
+                hasCallbackEnded = true;
             }
         });
 
@@ -173,5 +182,6 @@ public class HueService implements IHueService {
 
         // Replace current Lighting (if any) with received lighting
         Lighting.getINSTANCE().setLights(newLighting);
+        Log.d("LIGHTS", "Lights are successfully received.");
     }
 }
