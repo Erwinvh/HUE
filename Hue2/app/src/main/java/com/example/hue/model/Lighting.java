@@ -6,11 +6,9 @@ public class Lighting {
 
     private static Lighting INSTANCE = null;
     private HashMap<String, Light> lights;
-    private int numberOfLights;
 
     private Lighting() {
         this.lights = new HashMap<>();
-        this.numberOfLights = 0;
     }
 
     public static Lighting getINSTANCE() {
@@ -26,7 +24,6 @@ public class Lighting {
 
     public void setLights(HashMap<String, Light> lights) {
         this.lights = lights;
-        this.numberOfLights = lights.size();
     }
 
     public HashMap<String, Light> getLights() {

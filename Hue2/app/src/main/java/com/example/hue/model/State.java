@@ -1,20 +1,10 @@
 package com.example.hue.model;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 public class State {
     private int sat;
     private int bri;
     private int hue;
     private boolean on;
-
-    public State(JSONObject json) throws JSONException {
-        this.sat = json.getInt("sat");
-        this.bri = json.getInt("bri");
-        this.hue = json.getInt("hue");
-        this.on = json.getBoolean("on");
-    }
 
     public State(int sat, int bri, int hue, boolean on) {
         this.sat = sat;

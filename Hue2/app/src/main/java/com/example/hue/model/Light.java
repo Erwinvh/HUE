@@ -3,16 +3,13 @@ package com.example.hue.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 public class Light implements Parcelable {
     private String name;
     private State state;
 
-    public Light(JSONObject json) throws JSONException {
-        this.name = json.getString("name");
-        this.state = new State(json.getJSONObject("state"));
+    public Light(String name, int sat, int bri, int hue, boolean on) {
+        this.name = name;
+        this.state = new State(sat, bri, hue, on);
     }
 
     protected Light(Parcel in) {
