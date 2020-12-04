@@ -136,7 +136,7 @@ public class detailfragment extends Fragment {
                                                     hueService.updateSat(subjectKey, (int) (hue[1] * 255));
                                                     hueService.updateHue(subjectKey, (int) (hue[0] * 182));
                                                     hueService.updateBri(subjectKey, (int) (hue[2] * 255));
-                                                    Log.d(getClass().getSimpleName(), "[" + hue[0] + ", " + hue[1] + ", " + hue[2] + "]");
+                                                    Log.d("detailfragment.java", "Color code sent: [" + hue[0] + ", " + hue[1] + ", " + hue[2] + "]"); // Source: https://github.com/square/okhttp/issues/2408
 
                                                     subjectLamp.getState().setHue((int) hue[0]);
                                                     subjectLamp.getState().setSat((int) hue[1]);
