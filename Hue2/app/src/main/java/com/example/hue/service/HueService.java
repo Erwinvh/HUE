@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.hue.MainActivity;
 import com.example.hue.R;
 import com.example.hue.model.Light;
 import com.example.hue.model.Lighting;
@@ -43,8 +44,19 @@ public class HueService implements IHueService {
         this.isPutServiceSuccess = false;
     }
 
-    public void getLights() {
-        getService("http://10.0.2.2:8000/api/newdeveloper/lights/");
+    public void getLights(boolean forceConnect) {
+        String loadedJson = MainActivity.loadLights();
+        if (loadedJson.equals("") || forceConnect) {
+            getService("http://10.0.2.2:8000/api/newdeveloper/lights/");
+        } else {
+            try {
+                deserialize(new JSONObject(loadedJson));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+
     }
 
     public boolean updateName(String lightNumber, String name) {
@@ -123,6 +135,7 @@ public class HueService implements IHueService {
                 String json = response.body().string();
                 Log.d(TAG, "Received: " + json);
                 try {
+                    MainActivity.saveLights(json);
                     deserialize(new JSONObject(json));
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -193,5 +206,10 @@ public class HueService implements IHueService {
         // Replace current Lighting (if any) with received lighting
         Lighting.getINSTANCE().setLights(newLighting);
         Log.d("LIGHTS", "Lights are successfully received.");
+        test();
+    }
+
+    private static void test() {
+        System.out.println("test");
     }
 }

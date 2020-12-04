@@ -63,7 +63,7 @@ public class masterfragment extends Fragment {
     }
 
     public void fetchLampListAsync() {
-        hueService.getLights();
+        hueService.getLights(true);
 
         mAdapter.clear();
         mAdapter.addAll(new ArrayList<Light>(Lighting.getINSTANCE().getLights().values()));
