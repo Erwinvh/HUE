@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings">INSTELLINGEN</string>
+    <string name="onoff">UIT/AAN</string>
+    <string name="pickColor">KIES KLEUR</string>
+</resources>

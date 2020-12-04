@@ -1,11 +1,7 @@
 package com.example.hue.model;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class State {
     private int sat;
@@ -18,6 +14,13 @@ public class State {
         this.bri = json.getInt("bri");
         this.hue = json.getInt("hue");
         this.on = json.getBoolean("on");
+    }
+
+    public State(int sat, int bri, int hue, boolean on) {
+        this.sat = sat;
+        this.bri = bri;
+        this.hue = hue;
+        this.on = on;
     }
 
     public int getSat() {

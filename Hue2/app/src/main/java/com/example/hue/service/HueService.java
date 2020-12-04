@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -81,13 +82,7 @@ public class HueService implements IHueService {
         String body = "{\"" + variable + "\":\"" + variable + "\"}";
         RequestBody requestBody = RequestBody.create(body.getBytes());
 
-        if (putService(service, requestBody)) {
-            Log.d(TAG, "Test putService successful.");
-            return true;
-        } else {
-            Log.d(TAG, "Test putService failed.");
-            return false;
-        }
+        return putService(service, requestBody);
     }
 
     @Override
@@ -138,10 +133,19 @@ public class HueService implements IHueService {
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                String json = response.body().string();
-                Log.d(TAG, "Received response  " + json);
-                isPutServiceSuccess = json.length() > 20 && json.contains("\"success\":");
-                hasCallbackEnded = true;
+                if (response.isSuccessful()) {
+                    try {
+                        String json = response.body().string();
+                        Log.d(TAG, "Received response  " + json);
+                        isPutServiceSuccess = json.length() > 20 && json.contains("\"success\":");
+                        hasCallbackEnded = true;
+                    } catch (IOException e) {
+                        isPutServiceSuccess = false;
+                        hasCallbackEnded = true;
+                        Log.d(TAG, Objects.requireNonNull(e.getLocalizedMessage()));
+                    }
+                }
+
             }
         });
 
