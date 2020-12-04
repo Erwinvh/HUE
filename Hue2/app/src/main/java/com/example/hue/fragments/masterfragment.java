@@ -28,7 +28,7 @@ public class masterfragment extends Fragment {
     private LampAdapter mAdapter;
     private List<Light> mLampList;
     private SwipeRefreshLayout swipeContainer;
-    private HueService hueService = new HueService(getContext());
+    private HueService hueService = new HueService();
 
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
         View RootView = inflater.inflate(R.layout.masterfragment, container, false);

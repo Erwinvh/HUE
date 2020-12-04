@@ -48,7 +48,7 @@ public class detailfragment extends Fragment {
         View RootView = inflater.inflate(R.layout.detailfragment, container, false);
 
         // Initalise HueService
-        hueService = new HueService(getContext());
+        hueService = new HueService();
 
         //NAME
         LampName = (EditText) RootView.findViewById(R.id.LampNameDetail);

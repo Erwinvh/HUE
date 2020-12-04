@@ -37,7 +37,7 @@ public class LampAdapter extends RecyclerView.Adapter<LampAdapter.LampViewHolder
         this.mMasterfragment = masterFragment;
         mInflator = LayoutInflater.from(context);
         this.mLampList = projectList;
-        this.hueService = new HueService(context);
+        this.hueService = new HueService();
     }
 
     public void clear() {

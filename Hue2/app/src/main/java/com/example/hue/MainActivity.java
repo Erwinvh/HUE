@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        service = new HueService(getApplicationContext());
+        service = new HueService();
         service.getLights();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.Container, new masterfragment()).commit();

@@ -31,9 +31,8 @@ public class HueService implements IHueService {
     private OkHttpClient client;
     volatile boolean hasCallbackEnded;
     volatile boolean isPutServiceSuccess;
-    private Context context;
 
-    public HueService(Context context) {
+    public HueService() {
         this.client = new OkHttpClient.Builder()
                 .connectTimeout(200, TimeUnit.MILLISECONDS)
                 .readTimeout(200, TimeUnit.MILLISECONDS)
@@ -42,7 +41,6 @@ public class HueService implements IHueService {
                 .build();
         this.hasCallbackEnded = false;
         this.isPutServiceSuccess = false;
-        this.context = context;
     }
 
     public void getLights() {
@@ -175,6 +173,7 @@ public class HueService implements IHueService {
         while (keys.hasNext()) {
             String key = keys.next();
             try {
+
                 JSONObject jsonLight = json.getJSONObject(key);
                 String name = jsonLight.getString("name");
                 JSONObject jsonState = jsonLight.getJSONObject("state");
