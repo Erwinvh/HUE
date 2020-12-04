@@ -105,7 +105,7 @@ public class detailfragment extends Fragment {
         hsvfloat[1] = (float) (subjectLamp.getState().getSat() / 2.55);
         hsvfloat[2] = (float) (subjectLamp.getState().getBri() / 2.55);
         mDefaultColor = Color.HSVToColor(hsvfloat);
-        mColorPreview = RootView.findViewById(R.id.preview_selected_color);
+        mColorPreview = RootView.findViewById(R.id.preview_master_color);
         if (LampSwitch.isChecked()){
             mColorPreview.setBackgroundColor(mDefaultColor);
         }else{

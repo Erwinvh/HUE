@@ -3,6 +3,7 @@ package com.example.hue;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
@@ -134,10 +135,32 @@ public class LampAdapter extends RecyclerView.Adapter<LampAdapter.LampViewHolder
                     Light element = mLampList.get(mPosition);
                     element.getState().setOn(LampSwitchItemView.isChecked());
                     hueService.updateOn(Integer.toString(mPosition + 1), LampSwitchItemView.isChecked());
-                    //LampSwitchItemView.setChecked(!LampSwitchItemView.isChecked());
+                    if (LampSwitchItemView.isChecked()){
+                        float[] HueColors = new float[3];
+                        HueColors[0] = (float) element.getState().getHue();
+                        HueColors[1] = (float) element.getState().getSat();
+                        HueColors[2] = (float) element.getState().getBri();
+                        int setColor = Color.HSVToColor(HueColors);
+                        LampImageItemView.setBackgroundColor(setColor);
+                    }else{
+                        LampImageItemView.setBackgroundColor(Color.BLACK);
+                    }
                 }
             });
-            LampImageItemView = itemView.findViewById(R.id.LampImage);
+            LampImageItemView = itemView.findViewById(R.id.preview_master_color);
+            if (LampSwitchItemView.isChecked()){
+                int mPosition = getLayoutPosition();
+                Light element = mLampList.get(mPosition);
+                float[] HueColors = new float[3];
+                HueColors[0] = (float) element.getState().getHue();
+                HueColors[1] = (float) element.getState().getSat();
+                HueColors[2] = (float) element.getState().getBri();
+                int setColor = Color.HSVToColor(HueColors);
+                LampImageItemView.setBackgroundColor(setColor);
+            }else{
+                LampImageItemView.setBackgroundColor(Color.BLACK);
+            }
+
             this.mAdapter = adapter;
             itemView.setOnClickListener(this);
         }
